@@ -323,6 +323,11 @@ def gather_color_property(export_settings, object, component, property_name, col
 
     return "#{0:02x}{1:02x}{2:02x}".format(c[0], c[1], c[2], 255)
 
+def gather_color_opacity(export_settings, object, component, property_name):
+    c = list(getattr(component, property_name))
+
+    return max(0, min(c[3], 1.0))
+
 # MOZ_lightmap extension data
 
 
