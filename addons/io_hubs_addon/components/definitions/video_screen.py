@@ -1,15 +1,9 @@
-from pprint import pprint
-from inspect import getmembers
-
-
-from bpy.props import EnumProperty, PointerProperty, StringProperty
+from bpy.props import PointerProperty
 from ..hubs_component import HubsComponent
-from ..types import Category, PanelType, NodeType
 from ..utils import has_component
 from bpy.types import Object
-from ..consts import TRANSPARENCY_MODE
+from ..types import Category, PanelType, NodeType
 from ...io.utils import gather_node_property, delayed_gather
-
 
 def filter_on_component(self, ob):
     from .video import Video
@@ -23,30 +17,26 @@ def filter_on_component(self, ob):
                 return True
     return has_component(ob, dep_name)
 
-class VideoSwitcher(HubsComponent):
+class VideoScreen(HubsComponent):
     _definition = {
-        'name': 'video-switcher',
-        'display_name': 'Video Switcher',
+        'name': 'video-screen',
+        'display_name': 'Video Custom Projection',
         'category': Category.MEDIA,
         'node_type': NodeType.NODE,
-        'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'IMAGE_DATA'
+        'panel_type': [PanelType.OBJECT],
+        'deps': ['video'],
+        'icon': 'FILE_MOVIE'
     }
 
     targetNode: PointerProperty(
-        name="Video Node",
-        description="Node with the video to manage",
+        name="Video",
+        description="Video to project",
         type=Object,
         poll=filter_on_component)
-
-    src: StringProperty(
-        name="Video URL", description="Video URL", default='https://')
 
     @delayed_gather
     def gather(self, export_settings, object):
 
         return {
-            'src': self.src,
             'target': gather_node_property(export_settings, object, self, 'targetNode'),
         }
-
