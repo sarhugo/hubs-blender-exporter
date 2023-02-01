@@ -13,7 +13,8 @@ class ConnectPairsPuzzle(HubsComponent):
         'category': Category.MEDIA,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT],
-        'icon': 'PACKAGE'
+        'icon': 'PACKAGE',
+        'version': (1, 0, 0)
     }
 
     unlock: PointerProperty(
@@ -35,7 +36,8 @@ class ConnectPairs(HubsComponent):
         'category': Category.MEDIA,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT],
-        'icon': 'PACKAGE'
+        'icon': 'PACKAGE',
+        'version': (1, 0, 0)
     }
 
     pair: IntProperty(

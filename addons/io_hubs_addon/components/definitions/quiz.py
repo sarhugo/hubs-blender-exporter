@@ -10,7 +10,8 @@ class QuizAnswer(HubsComponent):
         'category': Category.MEDIA,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'QUESTION'
+        'icon': 'QUESTION',
+        'version': (1, 0, 0)
     }
 
     quiz: StringProperty(

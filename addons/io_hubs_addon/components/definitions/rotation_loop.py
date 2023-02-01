@@ -9,7 +9,8 @@ class Rotation(HubsComponent):
         'category': Category.ANIMATION,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'FORCE_MAGNETIC'
+        'icon': 'FORCE_MAGNETIC',
+        'version': (1, 0, 0)
     }
 
     speed: FloatProperty(

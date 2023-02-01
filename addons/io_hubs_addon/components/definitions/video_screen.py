@@ -25,7 +25,8 @@ class VideoScreen(HubsComponent):
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT],
         'deps': ['video'],
-        'icon': 'FILE_MOVIE'
+        'icon': 'FILE_MOVIE',
+        'version': (1, 0, 0)
     }
 
     targetNode: PointerProperty(

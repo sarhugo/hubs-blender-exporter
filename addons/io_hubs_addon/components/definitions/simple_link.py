@@ -10,7 +10,8 @@ class SimpleLink(HubsComponent):
         'category': Category.ELEMENTS,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'LINKED'
+        'icon': 'LINKED',
+        'version': (1, 0, 0)
     }
 
     href: StringProperty(name="Link URL", description="Link absolute url",

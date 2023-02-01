@@ -32,7 +32,8 @@ class VideoControl(HubsComponent):
         'category': Category.MEDIA,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'MOD_PARTICLE_INSTANCE'
+        'icon': 'MOD_PARTICLE_INSTANCE',
+        'version': (1, 0, 0)
     }
 
     targetNode: PointerProperty(

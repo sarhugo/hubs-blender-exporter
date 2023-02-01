@@ -10,7 +10,8 @@ class InfoPanel(HubsComponent):
         'category': Category.MEDIA,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'INFO'
+        'icon': 'INFO',
+        'version': (1, 0, 0)
     }
 
     group: StringProperty(

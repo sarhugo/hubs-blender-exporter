@@ -10,7 +10,8 @@ class RoomLink(HubsComponent):
         'category': Category.ELEMENTS,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'LINKED'
+        'icon': 'LINKED',
+        'version': (1, 0, 0)
     }
 
     src: StringProperty(name="Room URL", description="Room absolute url",

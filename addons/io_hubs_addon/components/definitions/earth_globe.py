@@ -27,7 +27,8 @@ class EarthGlobe(HubsComponent):
         'category': Category.ELEMENTS,
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
-        'icon': 'SPHERE'
+        'icon': 'SPHERE',
+        'version': (1, 0, 0)
     }
 
     textNode: PointerProperty(

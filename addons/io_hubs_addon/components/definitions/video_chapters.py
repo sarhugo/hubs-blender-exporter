@@ -11,7 +11,8 @@ class VideoChapters(HubsComponent):
         'node_type': NodeType.NODE,
         'panel_type': [PanelType.OBJECT, PanelType.BONE],
         'deps': ['video'],
-        'icon': 'FILE_MOVIE'
+        'icon': 'FILE_MOVIE',
+        'version': (1, 0, 0)
     }
 
     src: StringProperty(
