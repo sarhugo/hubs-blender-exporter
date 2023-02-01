@@ -1,9 +1,9 @@
 from bpy.props import PointerProperty
-from ..hubs_component import HubsComponent
-from ..utils import has_component
 from bpy.types import Object
+from ..hubs_component import HubsComponent
 from ..types import Category, PanelType, NodeType
-from ...io.utils import gather_node_property, delayed_gather
+from ..utils import has_component
+from ...utils import delayed_gather
 
 def filter_on_component(self, ob):
     from .video import Video
@@ -36,7 +36,7 @@ class VideoScreen(HubsComponent):
 
     @delayed_gather
     def gather(self, export_settings, object):
-
+        from ...io.utils import gather_node_property
         return {
             'target': gather_node_property(export_settings, object, self, 'targetNode'),
         }

@@ -1,9 +1,8 @@
 from bpy.props import IntProperty, PointerProperty
-from ..hubs_component import HubsComponent
 from bpy.types import Object
+from ..hubs_component import HubsComponent
 from ..types import Category, PanelType, NodeType
-from ...io.utils import gather_node_property, delayed_gather
-
+from ...utils import delayed_gather
 
 class Pipezania(HubsComponent):
     _definition = {
@@ -28,7 +27,7 @@ class Pipezania(HubsComponent):
     
     @delayed_gather
     def gather(self, export_settings, object):
-
+        from ...io.utils import gather_node_property
         return {
             'level': self.level,
             'unlock': gather_node_property(export_settings, object, self, 'unlock')

@@ -1,14 +1,12 @@
 from pprint import pprint
 from inspect import getmembers
 
-
 from bpy.props import FloatVectorProperty, PointerProperty, StringProperty
+from bpy.types import Object
 from ..hubs_component import HubsComponent
 from ..types import Category, PanelType, NodeType
 from ..utils import has_component
-from bpy.types import Object
-from ...io.utils import gather_node_property, delayed_gather, gather_color_property, gather_color_opacity
-
+from ...utils import delayed_gather
 
 def filter_on_component(self, ob):
     from .text import Text
@@ -87,6 +85,7 @@ class EarthGlobe(HubsComponent):
 
     @delayed_gather
     def gather(self, export_settings, object):
+        from ...io.utils import gather_node_property, gather_color_property, gather_color_opacity
 
         return {
             'src': self.src,

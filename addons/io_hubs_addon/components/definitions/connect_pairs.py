@@ -2,7 +2,7 @@ from bpy.props import IntProperty, EnumProperty, PointerProperty
 from ..hubs_component import HubsComponent
 from bpy.types import Object
 from ..types import Category, PanelType, NodeType
-from ...io.utils import gather_node_property, delayed_gather
+from ...utils import delayed_gather
 
 PIECE_ORIENTATIONS = [("0", "Left", "Left Side"), ("1", "Right", "Right Side")]
 
@@ -23,7 +23,7 @@ class ConnectPairsPuzzle(HubsComponent):
     
     @delayed_gather
     def gather(self, export_settings, object):
-
+        from ...io.utils import gather_node_property
         return {
             'unlock': gather_node_property(export_settings, object, self, 'unlock')
         }
