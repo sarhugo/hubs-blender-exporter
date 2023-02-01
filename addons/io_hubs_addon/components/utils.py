@@ -234,7 +234,8 @@ def get_host_components(host):
         component_class = get_component_by_name(component_name)
         if not component_class:
             continue
-
+        if (not hasattr(host, component_class.get_id())):
+            continue
         component = getattr(host, component_class.get_id())
         components.append(component)
     return components

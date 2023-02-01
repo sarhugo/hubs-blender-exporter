@@ -189,14 +189,15 @@ class glTF2ExportUserExtension:
                 component_name = component_item.name
                 if component_name in registered_hubs_components:
                     component_class = registered_hubs_components[component_name]
-                    component = getattr(
-                        blender_object, component_class.get_id())
-                    data = component.gather(export_settings, blender_object)
-                    if hasattr(data, "delayed_gather"):
-                        self.delayed_gathers.append(
-                            (component_data, component_class.get_name(), data))
-                    else:
-                        component_data[component_class.get_name()] = data
+                    if (hasattr(blender_object, component_class.get_id())):
+                        component = getattr(
+                            blender_object, component_class.get_id())
+                        data = component.gather(export_settings, blender_object)
+                        if hasattr(data, "delayed_gather"):
+                            self.delayed_gathers.append(
+                                (component_data, component_class.get_name(), data))
+                        else:
+                            component_data[component_class.get_name()] = data
                 else:
                     print('Could not export unsupported component "%s"' %
                           (component_name))
