@@ -95,7 +95,12 @@ describe('Exporter', function () {
         assert.strictEqual(utils.checkExtensionAdded(node, 'MOZ_hubs_components'), true);
 
         const ext = node.extensions['MOZ_hubs_components'];
-        assert.deepStrictEqual(ext, { 'nav-mesh': {} });
+        assert.deepStrictEqual(ext, { 
+          'nav-mesh': {}, 
+          'visible': {
+            'visible': false
+          }
+        });
       });
 
       it('can export video-texture-source and video-texture-target', function () {
@@ -331,79 +336,34 @@ describe('Exporter', function () {
         const ext = node.extensions['MOZ_hubs_components'];
         assert.deepStrictEqual(ext, {
           "particle-emitter": {
-            "src": "",
-            "startColor": "#0cff00",
-            "middleColor": "#0cff00",
-            "endColor": "#0cff00",
-            "startOpacity": 1,
-            "middleOpacity": 1,
-            "endOpacity": 1,
-            "sizeCurve": "linear",
-            "colorCurve": "linear",
-            "startSize": 1,
-            "endSize": 1,
-            "sizeRandomness": 0,
-            "ageRandomness": 0,
-            "lifetime": 1,
-            "lifetimeRandomness": 0,
-            "particleCount": 10,
-            "startVelocity": {
-              "x": 0,
-              "y": 0,
-              "z": 0
+            "particleCount":10,
+            "src":"",
+            "ageRandomness":10,
+            "lifetime":1,
+            "lifetimeRandomness":5,
+            "sizeCurve":"linear",
+            "startSize":1,
+            "endSize":1,
+            "sizeRandomness":0,
+            "colorCurve":"linear",
+            "startColor":"#0cff00",
+            "startOpacity":1,
+            "middleColor":"#0cff00",
+            "middleOpacity":1,
+            "endColor":"#0cff00",
+            "endOpacity":1,
+            "velocityCurve":"linear",
+            "startVelocity":{
+              "x":0,
+              "y":0,
+              "z":0.5
             },
-            "endVelocity": {
-              "x": 0,
-              "y": 0,
-              "z": 0
+            "endVelocity":{
+              "x":0,
+              "y":0,
+              "z":0.5
             },
-            "velocityCurve": "linear",
-            "angularVelocity": 0
-          }
-        });
-      });
-
-      it('can export particle-emitter', function () {
-        let gltfPath = path.resolve(outDirPath, 'particle-emitter.gltf');
-        const asset = JSON.parse(fs.readFileSync(gltfPath));
-
-        assert.strictEqual(asset.extensionsUsed.includes('MOZ_hubs_components'), true);
-        assert.strictEqual(utils.checkExtensionAdded(asset, 'MOZ_hubs_components'), true);
-
-        const node = asset.nodes[0];
-        assert.strictEqual(utils.checkExtensionAdded(node, 'MOZ_hubs_components'), true);
-
-        const ext = node.extensions['MOZ_hubs_components'];
-        assert.deepStrictEqual(ext, {
-          "particle-emitter": {
-            "src": "",
-            "startColor": "#0cff00",
-            "middleColor": "#0cff00",
-            "endColor": "#0cff00",
-            "startOpacity": 1,
-            "middleOpacity": 1,
-            "endOpacity": 1,
-            "sizeCurve": "linear",
-            "colorCurve": "linear",
-            "startSize": 1,
-            "endSize": 1,
-            "sizeRandomness": 0,
-            "ageRandomness": 0,
-            "lifetime": 1,
-            "lifetimeRandomness": 0,
-            "particleCount": 10,
-            "startVelocity": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "endVelocity": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "velocityCurve": "linear",
-            "angularVelocity": 0
+            "angularVelocity":0
           }
         });
       });
@@ -445,6 +405,7 @@ describe('Exporter', function () {
         assert.deepStrictEqual(ext["image"], {
           "src": "https://uploads-prod.reticulum.io/files/81e942e8-6ae2-4cc5-b363-f064e9ea3f61.jpg",
           "controls": true,
+          "alphaCutoff": 0.5,
           "alphaMode": "opaque",
           "projection": "flat"
         });
@@ -679,7 +640,8 @@ describe('Exporter', function () {
         const ext = node.extensions['MOZ_hubs_components'];
         assert.deepStrictEqual(ext["audio-zone"], {
           "inOut": true,
-          "outIn": true
+          "outIn": true,
+          "dynamic": false
         });
         assert.deepStrictEqual(ext["audio-params"], {
           "audioType": "pannernode",
@@ -989,6 +951,21 @@ describe('Exporter', function () {
             "ripplesScale": 1
           }
         });
+      });
+
+      it('can export pdf', function () {
+        let gltfPath = path.resolve(outDirPath, 'pdf.gltf');
+        const asset = JSON.parse(fs.readFileSync(gltfPath));
+
+        assert.strictEqual(asset.extensionsUsed.includes('MOZ_hubs_components'), true);
+        assert.strictEqual(utils.checkExtensionAdded(asset, 'MOZ_hubs_components'), true);
+
+        const node = asset.nodes[0];
+        assert.strictEqual(utils.checkExtensionAdded(node, 'MOZ_hubs_components'), true);
+
+        const ext = node.extensions['MOZ_hubs_components'];
+        assert.deepStrictEqual(ext['image'], { "controls": true, src: 'https://hubs.mozilla.com' });
+        assert.strictEqual(utils.UUID_REGEX.test(ext['networked']['id']), true);
       });
     });
   });

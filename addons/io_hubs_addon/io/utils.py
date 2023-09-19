@@ -1,14 +1,19 @@
 import os
 import bpy
 from io_scene_gltf2.blender.com import gltf2_blender_extras
-from io_scene_gltf2.blender.exp import gltf2_blender_gather_materials, gltf2_blender_gather_nodes, gltf2_blender_gather_joints
-from io_scene_gltf2.blender.exp import gltf2_blender_gather_texture_info, gltf2_blender_export_keys
+if bpy.app.version >= (3, 6, 0):
+    from io_scene_gltf2.blender.exp import gltf2_blender_gather_nodes, gltf2_blender_gather_joints
+    from io_scene_gltf2.blender.exp.material import gltf2_blender_gather_materials, gltf2_blender_gather_texture_info
+    from io_scene_gltf2.blender.exp.material.extensions import gltf2_blender_image
+else:
+    from io_scene_gltf2.blender.exp import gltf2_blender_gather_materials, gltf2_blender_gather_nodes, gltf2_blender_gather_joints
+    from io_scene_gltf2.blender.exp import gltf2_blender_gather_texture_info, gltf2_blender_export_keys
+    from io_scene_gltf2.blender.exp import gltf2_blender_image
 from io_scene_gltf2.blender.exp.gltf2_blender_gather_cache import cached
 from io_scene_gltf2.io.com import gltf2_io_extensions
 from io_scene_gltf2.io.com import gltf2_io
 from io_scene_gltf2.io.exp import gltf2_io_binary_data
 from io_scene_gltf2.io.exp import gltf2_io_image_data
-from io_scene_gltf2.blender.exp import gltf2_blender_image
 from typing import Optional, Tuple, Union
 from ..nodes.lightmap import MozLightmapNode
 
@@ -31,10 +36,13 @@ class HubsExportImage(gltf2_blender_image.ExportImage):
             export_image.fill_image(image, dst_chan=chan, src_chan=chan)
         return export_image
 
-    def encode(self, mime_type: Optional[str]) -> Union[Tuple[bytes, bool], bytes]:
+    def encode(self, mime_type: Optional[str], export_settings) -> Union[Tuple[bytes, bool], bytes]:
         if mime_type == "image/vnd.radiance":
             return self.encode_from_image_hdr(self.blender_image())
-        return super().encode(mime_type)
+        if bpy.app.version < (3, 5, 0):
+            return super().encode(mime_type)
+        else:
+            return super().encode(mime_type, export_settings)
 
     # TODO this should allow conversion from other HDR formats (namely EXR),
     # in memory images, and combining separate channels like SDR images
@@ -68,12 +76,12 @@ def gather_image(blender_image, export_settings):
     else:
         mime_type = "image/jpeg"
 
-    data = HubsExportImage.from_blender_image(blender_image).encode(mime_type)
+    data = HubsExportImage.from_blender_image(blender_image).encode(mime_type, export_settings)
 
     if type(data) == tuple:
         data = data[0]
 
-    if export_settings[gltf2_blender_export_keys.FORMAT] == 'GLTF_SEPARATE':
+    if export_settings['gltf_format'] == 'GLTF_SEPARATE':
         uri = HubsImageData(data=data, mime_type=mime_type, name=name)
         buffer_view = None
     else:
